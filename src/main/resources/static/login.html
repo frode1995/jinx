@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>主页</title>
+    <script src="js/jquery.js" type="text/javascript"></script>
+</head>
+<body>
+    <form id="signupForm">
+        <label for="username">帐号</label>
+        <input type="text" id="username" name="name">
+        <br>
+        <label for="password">密码</label>
+        <input type="password" id="password" name="password">
+        <br>
+        <input type="submit" id="submit" value="登录">
+        <label for="remFlag">记住密码</label>
+        <input type="radio" id="remFlag"  name="remFlag" onclick="remember()" checked="checked">
+    </form>
+
+</body>
+    <script>
+        $("#submit").on("click",function () {
+            var password = $("#password").val();
+            $.ajax({
+                type : "POST",
+                url : "/validateLogin",
+                data : $('#signupForm').serialize(),
+                dataType: "json",
+                success : function(r) {
+                    if(r.user.password===password){
+                        alert("登录成功，将进入主页")
+                        console.log("验证成功")
+                        parent.location.href = '/index';
+                    }else{
+                        alert("密码错误，请重新输入");
+                        parent.location.href = '/login';
+                    }
+                }
+            });
+        })
+
+        $(document).ready(function(){
+            //记住密码功能
+            var password = getCookie("frode");//得到frode的密码
+            //自动填充用户名和密码
+            $("#username").val("frode");
+            $("#password").val(password);
+        });
+
+        //获取cookie
+        function getCookie(cname) {//cookie成功的小例子
+            // console.log(document.cookie.cname);//这样取不出value值
+             var str = document.cookie;
+             console.log(str);
+             var password = str.split("=")[1];
+             console.log(password);
+             return password;
+        }
+
+    </script>
+</html>

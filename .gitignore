@@ -16,6 +16,13 @@
 *.iml
 *.ipr
 
+### 前端###
+*.js
+*.woff
+*.woff2
+*.ijmap
+*.txt
+*.css
 ### NetBeans ###
 /nbproject/private/
 /build/
